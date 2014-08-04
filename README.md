@@ -3,7 +3,7 @@ Silverstripe Ajax Framework
 
 Foundational ajax support for Silverstripe CMS: push/pull server-side regions, trigger client-side events, modals, status messages.
 
-See <docs/en/index.md> for examples and documentation.
+See [the documentation](docs/en/index.md) for examples and documentation.
 
 
 Features
