@@ -22,10 +22,6 @@ Developer(s)
 Contributions welcome by pull request and/or bug report.
 Please follow Silverstripe code standards (tests would be nice).
 
-I would love for someone to implement some other drivers - S3, Swift, Google, etc.
-It's very easy to implement drivers - just extend CloudBucket and implement a few
-methods.
-
 
 License (MIT)
 -------------
