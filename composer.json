@@ -1,0 +1,18 @@
+{
+	"name": "markguinn/silverstripe-ajax",
+	"description": "Foundational ajax support for Silverstripe CMS: push/pull server-side regions, trigger client-side events, modals, status messages.",
+	"type": "silverstripe-module",
+	"keywords": ["silverstripe", "ajax", "javascript", "events", "regions"],
+	"license": "MIT",
+	"authors": [{
+		"name": "Mark Guinn",
+		"email": "mark@adaircreative.com",
+		"homepage": "http://github.com/markguinn"
+	}],
+	"extra": {
+		"installer-name": "ajax"
+	},
+	"require": {
+		"silverstripe/framework": "~3.1"
+	}
+}

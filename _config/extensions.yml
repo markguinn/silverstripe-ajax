@@ -1,0 +1,6 @@
+---
+Name: ajaxextensions
+---
+Controller:
+  extensions:
+    - AjaxControllerExtension

@@ -1,0 +1,24 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>Shop Ajax Jasmine Test Runner</title>
+	<link rel="stylesheet" type="text/css" href="../../framework/thirdparty/jasmine/lib/jasmine.css">
+	<script type="text/javascript" src="../../framework/thirdparty/jasmine/lib/jasmine.js"></script>
+	<script type="text/javascript" src="../../framework/thirdparty/jasmine/lib/jasmine-html.js"></script>
+	<script type="text/javascript" src="../../framework/thirdparty/jasmine-jquery/lib/jasmine-jquery.js"></script>
+	<!--<script type="text/javascript" src="../../../framework/thirdparty/jasmine-dom/lib/jasmine-dom-fixtures.js"></script>-->
+	<script type="text/javascript" src="../../framework/thirdparty/jasmine-ajax/lib/mock-ajax.js"></script>
+	<script type="text/javascript" src="../../framework/thirdparty/jasmine-ajax/lib/spec-helper.js"></script>
+	<script type="text/javascript" src="../../framework/thirdparty/jquery/jquery.js"></script>
+	<script type="text/javascript" src="../javascript/base.js"></script>
+	<script type="text/javascript" src="../javascript/statusmessage.default.js"></script>
+	<script type="text/javascript" src="base.responses.js"></script>
+	<script type="text/javascript" src="base.tests.js"></script>
+</head>
+<body>
+	<script type="text/javascript">
+		jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
+		jasmine.getEnv().execute();
+	</script>
+</body>
+</html>

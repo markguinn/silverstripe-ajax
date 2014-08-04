@@ -1,0 +1,16 @@
+/* This contains some styles for default ajax interactions (loading etc) but can be left out if you desire. */
+
+input.ajax-loading, a.ajax-loading {
+	opacity: 0.5;
+}
+
+.show-when-loading { display: none !important; }
+.ajax-loading .hide-when-loading { display: none !important; }
+.ajax-loading .show-when-loading { display: block !important; }
+.ajax-loading .show-when-loading.i { display: inline !important; }
+.ajax-loading .show-when-loading.ib { display: inline-block !important; }
+
+.show-when-parent-loading { display: none !important; }
+.ajax-loading > .hide-when-parent-loading { display: none !important; }
+.ajax-loading > .show-when-parent-loading { display: block !important; }
+a.ajax-loading > .show-when-parent-loading { display: inline !important; }
