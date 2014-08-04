@@ -15,6 +15,14 @@ Features
 - Generic modals (easy to write an adapter - includes one for bootstrap)
 
 
+Installation
+------------
+
+```
+composer require markguinn/silverstripe-ajax:dev-master
+```
+
+
 Developer(s)
 ------------
 - Mark Guinn <mark@adaircreative.com>
