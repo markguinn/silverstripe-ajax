@@ -67,8 +67,7 @@ class AjaxResponseTest extends SapphireTest {
 		$req = new SS_HTTPRequest('GET', '/test1');
 		$req->addHeader(AjaxHTTPResponse::PULL_HEADER, 'TestSideCart,TestOrderHistory');
 		$req->addHeader('X-Requested-With', 'XMLHttpRequest');
-		$page = new Page();
-		$ctrl = new Page_Controller($page);
+		$ctrl = new Controller();
 		$ctrl->pushCurrent();
 		$ctrl->setRequest($req);
 		$ctrl->setDataModel(DataModel::inst());
@@ -85,8 +84,7 @@ class AjaxResponseTest extends SapphireTest {
 	function testPullRegionByParam() {
 		// this is a dirty dirty mess. sorry.
 		$req = new SS_HTTPRequest('GET', '/test1', array(AjaxHTTPResponse::PULL_PARAM => 'TestSideCart,TestOrderHistory'));
-		$page = new Page();
-		$ctrl = new Page_Controller($page);
+		$ctrl = new Controller();
 		$ctrl->pushCurrent();
 		$ctrl->setRequest($req);
 		$ctrl->setDataModel(DataModel::inst());
@@ -107,8 +105,7 @@ class AjaxResponseTest extends SapphireTest {
 		$req = new SS_HTTPRequest('GET', '/test1');
 		$req->addHeader(AjaxHTTPResponse::PULL_HEADER, 'TestProductGroupItem:BUYABLE');
 		$req->addHeader('X-Requested-With', 'XMLHttpRequest');
-		$page = new Page();
-		$ctrl = new Page_Controller($page);
+		$ctrl = new Controller();
 		$ctrl->pushCurrent();
 		$ctrl->setRequest($req);
 		$ctrl->setDataModel(DataModel::inst());
