@@ -4,6 +4,8 @@ Silverstripe Frontent Ajax Framework
 Foundational framework-agnostic frontend ajax support for Silverstripe CMS: push/pull server-side regions, trigger
 client-side events, modals, status messages.
 
+[build status](https://travis-ci.org/markguinn/silverstripe-ajax)
+
 See [the documentation](docs/en/index.md) for examples and documentation.
 
 Use Case: Add to Shopping Cart
