@@ -33,21 +33,39 @@ class AjaxResponseTest extends SapphireTest {
 	}
 
 
+	protected function getMockWithCart() {
+		return new ArrayData(array(
+			'Cart' => new ArrayData(array(
+				'Total' => 1.23,
+			)),
+		));
+	}
+
+
 	function testPushRegion() {
-		$mock = new ArrayData(array('Cart' => ShoppingCart::curr()));
+		$mock = $this->getMockWithCart();
 		$r = new AjaxHTTPResponse();
-		$r->pushRegion('SideCart', $mock);
+		$r->pushRegion('TestSideCart', $mock);
 		$json = $r->getBody();
 		$data = json_decode($json, true);
-		$this->assertNotEmpty($data[AjaxHTTPResponse::REGIONS_KEY]['SideCart'], 'should contain an entry for the side cart');
-		$this->assertEquals($data[AjaxHTTPResponse::REGIONS_KEY]['SideCart'], $mock->renderWith('SideCart')->forTemplate(), 'SideCart entry should match the sidecart template');
+
+		$this->assertNotEmpty(
+			$data[AjaxHTTPResponse::REGIONS_KEY]['TestSideCart'],
+			'should contain an entry for the side cart'
+		);
+
+		$this->assertEquals(
+			$data[AjaxHTTPResponse::REGIONS_KEY]['TestSideCart'],
+			$mock->renderWith('TestSideCart')->forTemplate(),
+			'SideCart entry should match the sidecart template'
+		);
 	}
 
 
 	function testPullRegion() {
 		// this is a dirty dirty mess. sorry.
 		$req = new SS_HTTPRequest('GET', '/test1');
-		$req->addHeader(AjaxHTTPResponse::PULL_HEADER, 'SideCart,OrderHistory');
+		$req->addHeader(AjaxHTTPResponse::PULL_HEADER, 'TestSideCart,TestOrderHistory');
 		$req->addHeader('X-Requested-With', 'XMLHttpRequest');
 		$page = new Page();
 		$ctrl = new Page_Controller($page);
@@ -59,14 +77,14 @@ class AjaxResponseTest extends SapphireTest {
 		$response = $ctrl->getAjaxResponse();
 		$ctrl->popCurrent();
 		$data = json_decode($response->getBody(), true);
-		$this->assertNotEmpty($data[AjaxHTTPResponse::REGIONS_KEY]['SideCart']);
-		$this->assertNotEmpty($data[AjaxHTTPResponse::REGIONS_KEY]['OrderHistory']);
+		$this->assertNotEmpty($data[AjaxHTTPResponse::REGIONS_KEY]['TestSideCart']);
+		$this->assertNotEmpty($data[AjaxHTTPResponse::REGIONS_KEY]['TestOrderHistory']);
 	}
 
 
 	function testPullRegionByParam() {
 		// this is a dirty dirty mess. sorry.
-		$req = new SS_HTTPRequest('GET', '/test1', array(AjaxHTTPResponse::PULL_PARAM => 'SideCart,OrderHistory'));
+		$req = new SS_HTTPRequest('GET', '/test1', array(AjaxHTTPResponse::PULL_PARAM => 'TestSideCart,TestOrderHistory'));
 		$page = new Page();
 		$ctrl = new Page_Controller($page);
 		$ctrl->pushCurrent();
@@ -74,18 +92,20 @@ class AjaxResponseTest extends SapphireTest {
 		$ctrl->setDataModel(DataModel::inst());
 		$ctrl->setURLParams(array());
 		$ctrl->init();
+
 		$response = $ctrl->getAjaxResponse();
 		$ctrl->popCurrent();
 		$data = json_decode($response->getBody(), true);
-		$this->assertNotEmpty($data[AjaxHTTPResponse::REGIONS_KEY]['SideCart']);
-		$this->assertNotEmpty($data[AjaxHTTPResponse::REGIONS_KEY]['OrderHistory']);
+
+		$this->assertNotEmpty($data[AjaxHTTPResponse::REGIONS_KEY]['TestSideCart']);
+		$this->assertNotEmpty($data[AjaxHTTPResponse::REGIONS_KEY]['TestOrderHistory']);
 	}
 
 
 	function testPullRegionWithRenderContext() {
 		// this is a dirty dirty mess. sorry.
 		$req = new SS_HTTPRequest('GET', '/test1');
-		$req->addHeader(AjaxHTTPResponse::PULL_HEADER, 'ProductGroupItem:BUYABLE');
+		$req->addHeader(AjaxHTTPResponse::PULL_HEADER, 'TestProductGroupItem:BUYABLE');
 		$req->addHeader('X-Requested-With', 'XMLHttpRequest');
 		$page = new Page();
 		$ctrl = new Page_Controller($page);
@@ -94,6 +114,7 @@ class AjaxResponseTest extends SapphireTest {
 		$ctrl->setDataModel(DataModel::inst());
 		$ctrl->setURLParams(array());
 		$ctrl->init();
+
 		$response = $ctrl->getAjaxResponse();
 		$response->addRenderContext('BUYABLE', new ArrayData(array(
 			'Title' => 'Test Product',
@@ -102,7 +123,8 @@ class AjaxResponseTest extends SapphireTest {
 		)));
 		$data = json_decode($response->getBody(), true);
 		$ctrl->popCurrent();
-		$this->assertNotEmpty($data[AjaxHTTPResponse::REGIONS_KEY]['ProductGroupItem']);
+
+		$this->assertNotEmpty($data[AjaxHTTPResponse::REGIONS_KEY]['TestProductGroupItem']);
 	}
 
 
