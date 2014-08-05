@@ -21,5 +21,5 @@ before_script:
   - cd ~/builds/ss
 
 script:
-  - phantomjs shop/tests/travis/phantom-jasmine.js ajax/tests/index.html
-  - vendor/bin/phpunit ajax/tests
+  - phantomjs ajax/tests/travis/phantom-jasmine.js ajax/tests/index.html
+  - vendor/bin/phpunit -c ajax/phpunit.xml.dist
