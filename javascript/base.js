@@ -155,60 +155,64 @@
 		}
 
 		$(document)
-			.ajaxComplete(function (event, xhr) {
-				var data = null;
-
-				try {
-					data = $.parseJSON(xhr.responseText);
-				} catch (e) {
-				}
-
-				if (data != null && typeof(data) === 'object') {
-					// Replace regions
-					if (typeof(data[config.REGIONS_KEY]) === 'object') {
-						for (var key in data[config.REGIONS_KEY]) {
-							if (typeof(data[config.REGIONS_KEY][key]) === 'string') {
-								replaceRegion(data[config.REGIONS_KEY][key], key);
+			.ajaxComplete(function (event, xhr, settings) {
+				
+			 	if (settings.dataType !== "script"){
+				
+					var data = null;
+	
+					try {
+						data = $.parseJSON(xhr.responseText);
+					} catch (e) {
+					}
+	
+					if (data != null && typeof(data) === 'object') {
+						// Replace regions
+						if (typeof(data[config.REGIONS_KEY]) === 'object') {
+							for (var key in data[config.REGIONS_KEY]) {
+								if (typeof(data[config.REGIONS_KEY][key]) === 'string') {
+									replaceRegion(data[config.REGIONS_KEY][key], key);
+								}
 							}
 						}
-					}
-
-					// Trigger events
-					if (typeof(data[config.EVENTS_KEY]) === 'object') {
-						for (var eventName in data[config.EVENTS_KEY]) {
-							$(document).trigger(eventName, [data[config.EVENTS_KEY][eventName]]);
+	
+						// Trigger events
+						if (typeof(data[config.EVENTS_KEY]) === 'object') {
+							for (var eventName in data[config.EVENTS_KEY]) {
+								$(document).trigger(eventName, [data[config.EVENTS_KEY][eventName]]);
+							}
 						}
-					}
-
-					// Show messages
-					if ($.isArray(data[config.MESSAGES_KEY])) {
-						var messages = data[config.MESSAGES_KEY];
-						for (var i = 0; i < messages.length; i++) {
-							var message = typeof(messages[i]) == 'string' ? {content:message[i]} : messages[i];
-							$(document).trigger('statusmessage', message);
+	
+						// Show messages
+						if ($.isArray(data[config.MESSAGES_KEY])) {
+							var messages = data[config.MESSAGES_KEY];
+							for (var i = 0; i < messages.length; i++) {
+								var message = typeof(messages[i]) == 'string' ? {content:message[i]} : messages[i];
+								$(document).trigger('statusmessage', message);
+							}
 						}
-					}
-				} else if (xhr.status === 200 && xhr.responseText.indexOf('<') > -1) {
-					// Otherwise, if we got some html, try to insert it as a region
-					// This is mainly used with form validation, which is somewhat hardcoded in Silverstripe
-					replaceRegion(xhr.responseText, 'UnidentifiedRegion');
-				} else if (xhr.status >= 400) {
-					// If there was no understandable payload AND the status code is an error,
-					// we need to try to guess at a status message and display it to the user
-					// default to the official status description
-					var msg = config.statusCodes[xhr.status];
-					if (typeof(msg) === 'undefined') msg = 'Unknown Error';
-
-					// if the body is present and doesn't look too much like a full html page, use that instead
-					if (typeof(xhr.responseText) === 'string' && xhr.responseText.length > 0) {
-						if (!config.checkForFullPage.test(xhr.responseText)) {
-							msg = xhr.responseText;
+					} else if (xhr.status === 200 && xhr.responseText.indexOf('<') > -1) {
+						// Otherwise, if we got some html, try to insert it as a region
+						// This is mainly used with form validation, which is somewhat hardcoded in Silverstripe
+						replaceRegion(xhr.responseText, 'UnidentifiedRegion');
+					} else if (xhr.status >= 400) {
+						// If there was no understandable payload AND the status code is an error,
+						// we need to try to guess at a status message and display it to the user
+						// default to the official status description
+						var msg = config.statusCodes[xhr.status];
+						if (typeof(msg) === 'undefined') msg = 'Unknown Error';
+	
+						// if the body is present and doesn't look too much like a full html page, use that instead
+						if (typeof(xhr.responseText) === 'string' && xhr.responseText.length > 0) {
+							if (!config.checkForFullPage.test(xhr.responseText)) {
+								msg = xhr.responseText;
+							}
 						}
+	
+						// trigger the status message
+						$(document).trigger('statusmessage', {content:msg, type:'error'});
 					}
-
-					// trigger the status message
-					$(document).trigger('statusmessage', {content:msg, type:'error'});
-				}
+			 	}
 			})
 			.ajaxStart(function () {
 				$('body').addClass('global-ajax-loading');
