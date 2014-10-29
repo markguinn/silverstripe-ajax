@@ -125,7 +125,8 @@
 		// handle ajax responses ///////////////////////////////////////////////////////////////////////////////////////
 
 		var replaceRegion = function(html, key) {
-			var $region = $(html),
+			var $foundRegion = false,
+				$region = $(html)[0],
 				explicit = $('[data-ajax-region="' + key + '"]'),
 				explicit2 = $('[data-ajax-region^="' + key + ':"]'),
 				id = $region.length > 0 ? $region.prop('id') : '',
@@ -137,15 +138,19 @@
 				// If there is one (or more) element with a data-ajax-region attribute it
 				// means we know for sure it's a match to this region, usually because the
 				// watch was set up on that particular element.
-				explicit.html(html=='' ? html : $region.html());
+				$foundRegion = explicit;
 			} else if (explicit2.length > 0) {
-				explicit2.html(html=='' ? html : $region.html());
+				$foundRegion = explicit2;
 			} else if (id) {
 				// second best is if the root element of the new content contains an id
-				$('#' + id).html($region.html());
+				$foundRegion = $('#' + id);
 			} else if (classes.length > 0) {
 				// otherwise, we try to match by css classes
-				$('.' + classes.join('.')).html($region.html());
+				$foundRegion = $('.' + classes.join('.'));
+			}
+			
+			if ($foundRegion && $foundRegion.length){
+				$foundRegion.empty().append($region);
 			} else {
 				// finally we fail silently but leave a warning for the developer
 				if (typeof(console) != 'undefined' && typeof(console.warn) == 'function') {
