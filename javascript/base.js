@@ -126,7 +126,7 @@
 
 		var replaceRegion = function(html, key) {
 			var $foundRegion = false,
-				$region = $(html)[0],
+				$region = $(html),
 				explicit = $('[data-ajax-region="' + key + '"]'),
 				explicit2 = $('[data-ajax-region^="' + key + ':"]'),
 				id = $region.length > 0 ? $region.prop('id') : '',
@@ -150,7 +150,7 @@
 			}
 			
 			if ($foundRegion && $foundRegion.length){
-				$foundRegion.empty().append($region);
+				$foundRegion.empty().append($region.html());
 			} else {
 				// finally we fail silently but leave a warning for the developer
 				if (typeof(console) != 'undefined' && typeof(console.warn) == 'function') {
