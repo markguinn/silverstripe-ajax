@@ -113,7 +113,9 @@
 
 				return false;
 			})
-			.on('click', 'form.ajax input[type=submit], form[data-target=ajax] input[type=submit]', function(){ // Form buttons
+			.on('click', 
+				'form.ajax input[type=submit], form[data-target=ajax] input[type=submit], ' +
+				'form.ajax button[type=submit], form[data-target=ajax] button[type=submit]', function(){ // Form buttons
 				// this allows us to know which button (if any was clicked)
 				// usually, we expect there to be an indicator on the button itself
 				// and additionally, we'll want to send the name=val of this button in the response
