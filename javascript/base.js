@@ -152,7 +152,7 @@
 			}
 			
 			if ($foundRegion && $foundRegion.length){
-				$foundRegion.empty().append($region.html());
+				$foundRegion.empty().append($region);
 			} else {
 				// finally we fail silently but leave a warning for the developer
 				if (typeof(console) != 'undefined' && typeof(console.warn) == 'function') {
